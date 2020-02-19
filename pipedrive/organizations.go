@@ -255,3 +255,22 @@ func (s *OrganizationsService) Create(ctx context.Context, opt *OrganizationCrea
 
 	return record, resp, nil
 }
+
+func (s *OrganizationsService) ListSingle(ctx context.Context, id int) (*OrganizationsResponse, *Response, error) {
+	uri := fmt.Sprintf("/organizations/%v", id)
+	req, err := s.client.NewRequest(http.MethodGet, uri, nil, nil)
+
+	if err != nil {
+		return nil, nil, err
+	}
+
+	var record *OrganizationsResponse
+
+	resp, err := s.client.Do(ctx, req, &record)
+
+	if err != nil {
+		return nil, resp, err
+	}
+
+	return record, resp, nil
+}
